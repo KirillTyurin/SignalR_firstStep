@@ -1,0 +1,44 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Left column for list of chats -->
+    <div class="col-md-3">
+      <div class="list-group">
+        <button *ngFor="let chat of SignalrService.chats" class="list-group-item list-group-item-action" (click)="selectChat(chat)">
+          {{ chat.name }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Middle section for messages -->
+    <div class="col-md-6">
+      <div *ngIf="selectedChat">
+        <h3>{{ selectedChat.name }}</h3>
+        <div *ngFor="let message of SignalrService.messages">
+          <p>{{ message.from }} : {{ message.body }}</p>
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="newMessage">New Message:</label>
+          <input type="text" class="form-control" id="newMessage" [(ngModel)]="newMessage" />
+        </div>
+        <button class="btn btn-primary" (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <!-- Right column for username input and chat creation -->
+    <div class="col-md-3">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" [(ngModel)]="username" [disabled]="usernameSet" />
+        <button class="btn btn-primary mt-2" (click)="setUsername()">Set Username</button>
+      </div>
+
+      <!-- Chat creation -->
+      <div class="form-group">
+        <label for="newChatName">New Chat Name:</label>
+        <input type="text" class="form-control" id="newChatName" [(ngModel)]="newChatName" />
+        <button class="btn btn-success mt-2" (click)="createChat()">Create Chat</button>
+      </div>
+    </div>
+  </div>
+</div>
